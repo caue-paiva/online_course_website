@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Aluno
 from django.contrib.sessions.backends.db import SessionStore
-from .serviceclasses import ServicoAluno
+from .serviceclasses import ServicoCurso
 # Create your views here.
 
 def login(request):
@@ -41,4 +41,15 @@ def dashboard(request):
    return render(request,"dashboard.html")
 
 def course_search(request):
-    return render(request,"course_search.html")
+    query = request.GET.get('query', '').strip()
+    Servico = ServicoCurso()
+    cursos:list = Servico.GetCursosNome(query) if query else []
+
+    for curso in cursos:
+        for modulo in curso.modulos.all(): 
+            print(modulo.nome)
+
+    return render(request,"course_search.html",{
+        'query': query,
+        'courses': cursos
+    })

@@ -27,9 +27,19 @@
         <ul class="list-group">
           {% for course in courses %}
             <li class="list-group-item">
-              <strong>{{ course.nome }}</strong>
+              <strong>{{ course.nome }} | {{ course.professor }}</strong>
               <br>
               {{ course.descricao }}
+              <h6 class="mt-2">Módulos:</h6>
+              {% if course.modulos.all %}
+                <ul>
+                  {% for module in course.modulos.all %}
+                    <li>{{ module.nome }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>No modules available.</p>
+              {% endif %}
             </li>
           {% endfor %}
         </ul>
