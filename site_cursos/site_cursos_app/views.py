@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Aluno
 from django.contrib.sessions.backends.db import SessionStore
+from .serviceclasses import ServicoAluno
 # Create your views here.
 
 def login(request):
@@ -38,3 +39,6 @@ def login(request):
 
 def dashboard(request):
    return render(request,"dashboard.html")
+
+def course_search(request):
+    return render(request,"course_search.html")
