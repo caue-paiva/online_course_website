@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Aluno
 from django.contrib.sessions.backends.db import SessionStore
-from .serviceclasses import ServicoCurso
+from .serviceclasses import ServicoAluno
 # Create your views here.
 
 def login(request):
@@ -38,18 +38,54 @@ def login(request):
    return render(request, "login.html")
 
 def dashboard(request):
-   return render(request,"dashboard.html")
+   servico = ServicoAluno()
+
+   #pega os dados da sessão do user
+   id_usuario = request.session.get("user_id")
+   nome_usuario = request.session.get("user_name")
+   email_usuario = request.session.get("user_email")
+   if id_usuario is None:
+      print("-- Usuario Não autenticado --")
+      raise RuntimeError("Usuario Não autenticado")
+   
+   #tenta desinscrever de um curso
+   if request.method == "POST":
+      id_curso = request.POST.get("curso_id")
+
+   #renderiza dashboard
+   cursos = servico.CursosDoUsuario(int(id_usuario))
+   return render(request,"dashboard.html",{
+       "username": nome_usuario,
+       "user_email": email_usuario,
+       "courses": cursos
+   })
 
 def course_search(request):
-    query = request.GET.get('query', '').strip()
-    Servico = ServicoCurso()
-    cursos:list = Servico.GetCursosNome(query) if query else []
+   Servico = ServicoAluno()
 
-    for curso in cursos:
-        for modulo in curso.modulos.all(): 
-            print(modulo.nome)
+   if request.method == "POST":
+      id_usuario = request.session.get("user_id")
+      id_curso = request.POST.get("curso_id")
+      print("--- Vars:  ",id_usuario,id_curso,"  ---")
+        
+      if id_usuario is None:
+            print("-- Usuario Não autenticado --")
+            raise RuntimeError("Usuario Não autenticado")
+      if id_curso is None:
+            print("-- Curso Não Encontrado --")
+            raise RuntimeError("-- Curso Não Encontrado --")
 
-    return render(request,"course_search.html",{
-        'query': query,
-        'courses': cursos
-    })
+      Servico.InscreverCurso(
+            id_usuario = int(id_usuario),
+            id_curso = int(id_curso)
+      )
+   
+   query = request.GET.get('query', '').strip()
+   cursos:list = Servico.GetCursosNome(query) if query else []
+   for curso in cursos:
+         for modulo in curso.modulos.all(): 
+               print(modulo.nome)
+   return render(request,"course_search.html",{
+         'query': query,
+         'courses': cursos
+   })

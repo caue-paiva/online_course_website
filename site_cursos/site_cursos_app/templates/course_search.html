@@ -40,6 +40,11 @@
               {% else %}
                 <p>No modules available.</p>
               {% endif %}
+              <form method="POST">
+               {% csrf_token %}
+               <input type="hidden" name="curso_id" value="{{ course.id }}">
+               <button type="submit" class="btn btn-primary mt-2">Inscrever</button>
+             </form>
             </li>
           {% endfor %}
         </ul>

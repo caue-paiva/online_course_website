@@ -1,10 +1,47 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title>Login</title>
+  <title>Dashboard</title>
 {% endblock %}
 
-
 {% block content %}
-<p>Dashboard</p>
+  <div class="container">
+    <!-- User Information -->
+    <div class="row my-4">
+      <h3>Olá {{ username }}. E-mail: {{ user_email }}</h3>
+    </div>
+
+    <!-- Subscribed Courses -->
+    <div class="row mt-5">
+      <h6 class="text-muted">Subscribed Courses:</h6>
+      {% if courses %}
+        <ul class="list-group">
+          {% for course in courses %}
+            <li class="list-group-item">
+              <strong>{{ course.nome }} | {{ course.professor }}</strong>
+              <br>
+              {{ course.descricao }}
+              <h6 class="mt-2">Módulos:</h6>
+              {% if course.modulos.all %}
+                <ul>
+                  {% for module in course.modulos.all %}
+                    <li>{{ module.nome }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>No modules available.</p>
+              {% endif %}
+              <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="curso_id" value="{{ course.id }}">
+                <button type="submit" class="btn btn-danger mt-2">Unsubscribe</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>You are not subscribed to any courses.</p>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
