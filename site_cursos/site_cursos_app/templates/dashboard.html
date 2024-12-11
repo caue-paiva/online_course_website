@@ -6,12 +6,14 @@
 
 {% block content %}
   <div class="container">
-    <!-- User Information -->
     <div class="row my-4">
       <h3>Olá {{ username }}. E-mail: {{ user_email }}</h3>
     </div>
 
-    <!-- Subscribed Courses -->
+    <div class="row my-3">
+        <a href="{% url 'busca' %}" class="btn btn-primary">Pesquisar por Cursos</a>
+    </div>
+
     <div class="row mt-5">
       <h6 class="text-muted">Subscribed Courses:</h6>
       {% if courses %}

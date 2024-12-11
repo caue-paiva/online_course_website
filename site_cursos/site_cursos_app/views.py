@@ -50,7 +50,12 @@ def dashboard(request):
    
    #tenta desinscrever de um curso
    if request.method == "POST":
-      id_curso = request.POST.get("curso_id")
+      id_curso = int(request.POST.get("curso_id"))
+      print(id_curso)
+      if not servico.CancelarInscricao(id_usuario,id_curso):
+         print("Falha ao desinscrever aluno do curso, o aluno não existe")
+      else:
+         print("Operação de desinscrever teve sucesso")
 
    #renderiza dashboard
    cursos = servico.CursosDoUsuario(int(id_usuario))
