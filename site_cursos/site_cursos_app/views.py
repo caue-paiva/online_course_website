@@ -6,13 +6,13 @@ from .serviceclasses import ServicoAluno
 
 def login(request):
    if request.method == "POST": #clicou no botão
-         name = request.POST.get("name")
+         nome = request.POST.get("name")
          email = request.POST.get("email")
-         password = request.POST.get("password")
+         senha = request.POST.get("password")
 
          alunos = Aluno.objects.filter(
             email=email,
-            senha=password
+            senha=senha
          )
 
          aluno: Aluno
@@ -21,8 +21,8 @@ def login(request):
          elif len(alunos) == 0: #nenhum aluno igual
             print("---- Criando Novo Aluno ----")
             aluno = Aluno.objects.create(
-                nome=name,
-                senha=password,
+                nome=nome,
+                senha=senha,
                 email=email
             )
          else:
