@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .models import Aluno
 from django.contrib.sessions.backends.db import SessionStore
 from .serviceclasses import ServicoAluno
+from django.utils import timezone
+
 # Create your views here.
 
 def login(request):
@@ -62,7 +64,8 @@ def dashboard(request):
    return render(request,"dashboard.html",{
        "username": nome_usuario,
        "user_email": email_usuario,
-       "courses": cursos
+       "courses": cursos,
+       'now': timezone.localtime(timezone.now())
    })
 
 def course_search(request):
