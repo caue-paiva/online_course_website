@@ -10,6 +10,8 @@
 
 5) Documentação melhor
 
+6) Em dashboard.html, fazer com que quando clique em Login, a pessoa vai para a página de login.html (como se ela tivesse deslogado). Também em dashboard, quando clicar em Meus Cursos na parte de cima, é para ser redirecionado para a parte de Meus Cursos em baixo (gpt sabe fazer).
+
 6) Mudar diagrama de acordo
 
 7) Relatório final
