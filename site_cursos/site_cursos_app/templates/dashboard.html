@@ -48,44 +48,43 @@
 
   
   <!-- Lista de Cursos Inscritos -->
-  <div class="py-5" style="background: linear-gradient(180deg, #3c3d5c, #0b0e32); color: white;">
-    <div class="container">
-      <h2 class="fw-bold text-center mb-4 text-white">Meus Cursos</h2>      
-      {% if courses %}
-        <ul class="list-group">
-          {% for course in courses %}
-            <li class="list-group-item bg-dark text-white mb-3">
-              <strong>{{ course.nome }} | {{ course.professor }}</strong>
-              <br>
-              {{ course.descricao }}
-              <h6 class="mt-2 fw-bold">Módulos:</h6>
-              {% if course.modulos.all %}
-                <ul>
-                  {% for module in course.modulos.all %}
-                    <li>{{ module.nome }}</li>
-                  {% endfor %}
-                </ul>
-              {% else %}
-                <p>No modules available.</p>
-              {% endif %}
-              <form method="POST" class="mt-3">
-                {% csrf_token %}
-                <input type="hidden" name="curso_id" value="{{ course.id }}">
-                <button type="submit" class="btn btn-danger">Unsubscribe</button>
-              </form>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p class="fw-bold">Você não está inscrito em nenhum curso</p>
-      {% endif %}
-    </div>
+<div class="py-5 d-flex justify-content-center" style="background-color: white;">
+  <div class="container" style="max-width: 1300px; background: linear-gradient(180deg, #3c3d5c, #0b0e32); color: white; border-radius: 10px; padding: 2rem;">
+    <h2 class="fw-bold text-center mb-4 text-white">Meus Cursos</h2>      
+    {% if courses %}
+      <ul class="list-group">
+        {% for course in courses %}
+          <li class="list-group-item bg-dark text-white mb-3 rounded">
+            <strong>{{ course.nome }} | {{ course.professor }}</strong>
+            <br>
+            {{ course.descricao }}
+            <h6 class="mt-2 fw-bold">Módulos:</h6>
+            {% if course.modulos.all %}
+              <ul>
+                {% for module in course.modulos.all %}
+                  <li>{{ module.nome }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No modules available.</p>
+            {% endif %}
+            <form method="POST" class="mt-3">
+              {% csrf_token %}
+              <input type="hidden" name="curso_id" value="{{ course.id }}">
+              <button type="submit" class="btn btn-danger">Unsubscribe</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="fw-bold">Você não está inscrito em nenhum curso</p>
+    {% endif %}
+
+    <!-- Rodapé -->
+    <footer class="text-center py-3 mt-4" style="background-color: #0b0e3 ; color: white;">
+      GradEdu © 2024 - Plataforma de cursos online
+    </footer>
   </div>
-
-  <!-- Rodapé -->
-  <footer class="text-center py-3" style="background-color: #0b0e32; color: white;">
-    GradEdu © 2024 - Plataforma de cursos online
-  </footer>
-
 </div>
+
 {% endblock %}
