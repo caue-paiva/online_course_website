@@ -13,7 +13,7 @@ class SiteCursosAppConfig(AppConfig):
         
         def populate_db(sender, **kwargs): #função para popular BD se n tiver dados
             try:
-                if not Curso.objects.exists():
+                if Curso.objects.count() < 5:
                     curso1 = Curso.objects.create(
                         nome="Python para Ciência de Dados",
                         descricao="Básico de Python, curso oferecido pelo DATA.",
