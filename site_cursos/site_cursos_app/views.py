@@ -46,12 +46,14 @@ def login(request):
    return render(request, "login.html")
 
 def deslogar(request):
+   #verificar se o usuário não está logado
+   if (request.session["user_id"]) == None:
+      raise RuntimeError("Usuario Não autenticado")
+   
    #apagar todas as informações sobre o usuário nessa sessão
-   del request.session["user_id"] 
-   del request.session["user_name"]
-   del request.session["user_email"]
+   request.session["user_id"] = None
 
-   return render(request, "login.html") #levar o usuário para a tela de login
+   return login(request)
 
 def dashboard(request):
    servico = ServicoAluno()

@@ -1,0 +1,11 @@
+@startuml
+start
+
+:Apagar 'user_id' da sessão;
+:Apagar 'user_name' da sessão;
+:Apagar 'user_email' da sessão;
+
+:Renderiza 'login.html' para levar o usuário à tela de login;
+
+stop
+@enduml

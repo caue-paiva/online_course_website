@@ -1,0 +1,37 @@
+@startuml
+start
+
+:Instancia ServicoAluno;
+:Obtém 'user_id' da sessão;
+:Obtém 'user_name' da sessão;
+:Obtém 'user_email' da sessão;
+
+if (id_usuario é None?) then (Sim)
+  :Imprime " Usuario Não autenticado ";
+  :Lança RuntimeError;
+  stop
+else (Não)
+endif
+
+
+
+if (request.method == "POST"?) then (Sim)
+note right
+    Relacionado ao botão de desisncrever do curso
+end note
+
+  :Obtém 'curso_id' de request.POST;
+
+  if (servico.CancelarInscricao(id_usuario, id_curso)?) then (Falha)
+    :Imprime "Falha ao desinscrever aluno do curso, o aluno não existe";
+  else (Sucesso)
+    :Imprime "Operação de desinscrever teve sucesso";
+  endif
+
+endif
+
+:Obtém lista de cursos do usuário com servico.CursosDoUsuario;
+:Renderiza 'dashboard.html' com dados do usuário;
+
+stop
+@enduml

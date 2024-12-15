@@ -1,0 +1,35 @@
+@startuml
+start
+
+:Obter id_usuario da sessão;
+if (id_usuario não é None?) then (Sim)
+    :Redirecionar para o dashboard;
+    stop
+else (Não)
+endif
+
+if (Método da requisição é POST?) then (Sim)
+    :Obter 'nome', 'email' e 'senha' do formulário;
+    
+    :Buscar Aluno com email e senha fornecidos;
+    
+    if (Mais de um aluno encontrado?) then (Sim)
+        :Exibir mensagem de erro: "Achou mais de um Aluno com mesmo login";
+    elseif (Nenhum aluno encontrado?) then (Sim)
+        :Exibir mensagem: "Criando Novo Aluno";
+        :Criar novo aluno com 'nome', 'email' e 'senha';
+    else (Não)
+        :Selecionar aluno existente;
+        :Exibir mensagem: "Aluno já Existia";
+    endif
+
+    :Salvar 'user_id', 'user_name' e 'user_email' na sessão;
+
+    :Redirecionar para o dashboard;
+    stop
+else (Não)
+    :Renderizar a página de login;
+endif
+
+stop
+@enduml

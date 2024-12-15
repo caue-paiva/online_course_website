@@ -1,0 +1,71 @@
+@startuml
+participant "Aluno" as User
+participant "Controller Aluno" as Controller
+participant "ServiçoAluno" as ServicoAluno
+participant "Sessão" as Sessao
+participant "Requisição" as Requisicao
+participant "Sistema" as Sistema
+
+
+activate User
+activate Controller
+User -> Controller: Inicializar ServicoAluno()
+Controller -> ServicoAluno : Inicializar ServicoAluno()
+deactivate Controller
+deactivate User
+activate ServicoAluno
+
+alt Requisição POST?
+    ServicoAluno -> Sessao : Obter 'id_usuario'
+    activate Sessao
+    Sessao --> ServicoAluno : 'id_usuario'
+    deactivate Sessao
+
+    alt 'id_usuario' é None?
+    activate User
+    activate Controller
+        ServicoAluno -> Controller : Exibir mensagem: "Usuário Não autenticado"
+        ServicoAluno -> Controller : Lançar RuntimeError
+
+        Controller -> User : Exibir mensagem: "Usuário Não autenticado"
+        Controller -> User : Lançar RuntimeError
+    deactivate User
+    deactivate Controller
+    else
+        ServicoAluno -> Requisicao : Obter 'query' da requisição GET
+        activate Requisicao
+        Requisicao --> ServicoAluno : 'query'
+        deactivate Requisicao
+    end
+else
+    note right ServicoAluno : Query vazia
+end
+
+alt Query é vazia?
+    ServicoAluno -> ServicoAluno : Definir 'cursos' como lista vazia
+else
+    ServicoAluno -> Sistema : Buscar cursos por nome usando 'query'
+    activate Sistema
+    Sistema --> ServicoAluno : Resultado da busca (cursos)
+    deactivate Sistema
+end
+
+loop Para cada 'curso' em 'cursos'
+    ServicoAluno -> Sistema : Há módulos no curso?
+    activate Sistema
+    Sistema --> ServicoAluno : Sim
+    deactivate Sistema
+
+    activate User
+    activate Controller
+    ServicoAluno -> Controller : Exibir o nome do módulo
+    Controller -> User : Exibir o nome do módulo
+end
+
+ServicoAluno -> Controller : Renderizar "course_search.html" com 'query' e 'cursos'
+Controller -> User : Renderizar "course_search.html" com 'query' e 'cursos'
+deactivate ServicoAluno
+deactivate User
+deactivate Controller
+
+@enduml

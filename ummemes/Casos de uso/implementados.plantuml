@@ -1,0 +1,37 @@
+@startuml
+actor Aluno
+actor Professor
+
+(Acessar Dashboard) #LightBlue
+(Pesquisar por Curso) #LightBlue
+(Realizar Login) #LightBlue
+(Finalizar sessão) #LightBlue
+(Visualizar Curso Inscrito) #LightBlue
+(Desinscrever do curso) #LightBlue
+(Inscrever no curso) #LightBlue
+ 
+Aluno -- (Acessar Dashboard)
+Professor -- (Acessar Dashboard)
+Professor -- (Pesquisar por Curso)
+Professor -- (Gerir seus Cursos)
+
+Aluno -- (Realizar Login)
+Professor -- (Realizar Login)
+Aluno -- (Finalizar sessão)
+Professor -- (Finalizar sessão)
+
+(Acessar Dashboard) ..> (Visualizar Curso Inscrito) : <<extended>>
+(Visualizar Curso Inscrito) ..> (Desinscrever do curso) : <<extended>>
+(Visualizar Curso Inscrito) ..> (Acessar curso inscrito) : <<extended>>
+(Acessar curso inscrito) ..> (Acessar Aulas) : <<extended>>
+(Acessar Aulas) ..> (Concluir a aula) : <<extended>>
+(Acessar Aulas) ..> (Baixar Materiais) : <<extended>>
+(Acessar curso inscrito) ..> (Concluir Curso) : <<extended>>
+(Concluir Curso) ..> (Gerar Certificado) : <<extended>>
+
+(Pesquisar por Curso) ..> (Inscrever no curso) : <<extended>>
+
+(Gerir seus Cursos) ..> (Editar Curso Existente) : <<extended>>
+(Gerir seus Cursos) ..> (Criar Curso) : <<extended>>
+(Criar Curso) ..> (Gerenciar Mídia e Materiais) : <<extended>>
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+start
+
+:Inicializar ServicoAluno;
+
+if (Método é POST?) then (Sim)
+    :Obter 'id_usuario' e 'id_curso';
+
+    if (id_usuario ou id_curso é None?) then (Sim)
+        :Exibir mensagem de erro;
+        stop
+    else (Query vazia)
+    endif
+
+    :Inscrever usuário no curso;
+endif
+
+:Obter 'query' da requisição GET;
+
+if (query é vazia?) then (Não)
+    :Buscar cursos pelo nome;
+else (Sim)
+    :Definir 'cursos' como lista vazia;
+endif
+
+:Exibir módulos dos cursos encontrados;
+
+:Renderizar "course_search.html" com resultados;
+
+stop
+@enduml

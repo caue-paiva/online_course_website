@@ -1,0 +1,31 @@
+@startuml
+actor Usuario
+participant Controller
+participant Session
+participant View as "login.html"
+
+activate Usuario
+Usuario -> Controller : deslogar(Controller)
+
+activate Controller
+deactivate Usuario
+
+Controller -> Session : del session["user_id"]
+activate Session
+deactivate Session
+
+Controller -> Session : del session["user_name"]
+activate Session
+deactivate Session
+
+Controller -> Session : del session["user_email"]
+activate Session
+deactivate Session
+
+Controller -> View : render("login.html")
+activate View
+deactivate View
+
+deactivate Controller
+
+@enduml
