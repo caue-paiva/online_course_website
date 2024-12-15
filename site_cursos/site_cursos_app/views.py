@@ -7,6 +7,12 @@ from django.utils import timezone
 # Create your views here.
 
 def login(request):
+   #caso o usuário já esteja logado, leva-lo até o dashboard
+   id_usuario = request.session.get("user_id")
+   if id_usuario is not(None):
+       return redirect("dashboard")
+
+
    if request.method == "POST": #clicou no botão
          nome = request.POST.get("name")
          email = request.POST.get("email")
@@ -38,6 +44,14 @@ def login(request):
          return redirect("dashboard")  # Redirect to the dashboard view
 
    return render(request, "login.html")
+
+def deslogar(request):
+   #apagar todas as informações sobre o usuário nessa sessão
+   del request.session["user_id"] 
+   del request.session["user_name"]
+   del request.session["user_email"]
+
+   return render(request, "login.html") #levar o usuário para a tela de login
 
 def dashboard(request):
    servico = ServicoAluno()
@@ -89,6 +103,37 @@ def course_search(request):
       )
    
    query = request.GET.get('query', '').strip()
+   cursos:list = Servico.GetCursosNome(query) if query else []
+   for curso in cursos:
+         for modulo in curso.modulos.all(): 
+               print(modulo.nome)
+   return render(request,"course_search.html",{
+         'query': query,
+         'courses': cursos
+   })
+
+def RetornarTodosCursos(request):
+   Servico = ServicoAluno()
+
+   if request.method == "POST":
+      id_usuario = request.session.get("user_id")
+      id_curso = request.POST.get("curso_id")
+      print("--- Vars:  ",id_usuario,id_curso,"  ---")
+        
+      if id_usuario is None:
+            print("-- Usuario Não autenticado --")
+            raise RuntimeError("Usuario Não autenticado")
+      if id_curso is None:
+            print("-- Curso Não Encontrado --")
+            raise RuntimeError("-- Curso Não Encontrado --")
+
+      Servico.InscreverCurso(
+            id_usuario = int(id_usuario),
+            id_curso = int(id_curso)
+      )
+   
+   #query = request.GET.get('query', '').strip()
+   query = "a"
    cursos:list = Servico.GetCursosNome(query) if query else []
    for curso in cursos:
          for modulo in curso.modulos.all(): 

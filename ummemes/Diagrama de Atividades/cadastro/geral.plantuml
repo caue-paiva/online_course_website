@@ -1,0 +1,24 @@
+@startuml
+
+|Usuário|
+start
+:Acessa a área de cadastro;
+
+|Sistema|
+:Solicita dados do usuário (senha, email, nome, Professor/Aluno, Instituição(Opicional));
+
+|Usuário|
+:Informa os dados;
+
+|Sistema|
+while (Dados inconsistentes?) is (Sim)
+    :Mensagem de Erro;
+    stop
+    
+endwhile (Não)
+
+|Sistema|
+:Cadastro realizado;
+stop
+
+@enduml

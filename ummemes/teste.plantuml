@@ -1,0 +1,37 @@
+@startuml
+
+skinparam roundcorner 15
+skinparam ArrowColor #4C566A
+skinparam BackgroundColor #F3F3F3
+skinparam BoxBackgroundColor #5D6986
+skinparam BoxFontColor white
+skinparam BoxBorderColor white
+skinparam ArrowThickness 2
+
+title Visão Geral do Sistema
+
+' Definição de contornos (sistemas maiores)
+package "Sistema de Processamento" {
+    rectangle "Criar Conta" as CriarConta
+}
+
+package "Funções do Sistema" {
+    rectangle "Sistema de Avisos" as SistemaAvisos
+    rectangle "Sistema de recomendação" as SistemaRecomendacao
+}
+
+' Adicionando fluxos principais com descrições
+CriarConta -down-> SistemaAvisos : Enviar Avisos Personalizados
+CriarConta -down-> SistemaRecomendacao : Gerar Recomendações
+
+' Loop contínuo para o Sistema de Avisos com explicação
+SistemaAvisos -right-> SistemaAvisos : Loop de Atualização de Avisos
+
+' Loop contínuo para o Sistema de Recomendação com explicação
+SistemaRecomendacao -left-> SistemaRecomendacao : Loop de Atualização de Recomendações
+
+' Adicionando um retorno do usuário ou feedback, opcional
+SistemaAvisos -down-> CriarConta : Feedback do Usuário
+SistemaRecomendacao -down-> CriarConta : Dados de Recomendação
+
+@enduml

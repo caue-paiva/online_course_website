@@ -1,0 +1,28 @@
+@startuml
+
+package "Sistema de Cursos Online" {
+    component "Dashboard" as Dashboard
+    component "Gestão de Aulas" as GestaoAulas
+    component "Gestão de Cursos" as GestaoCursos
+    component "Inscrição em Cursos" as InscricaoCursos
+    component "Autenticação e Autorização" as Autenticacao
+    component "Banco de Dados" as BancoDados
+    component "Recomendações de Cursos" as Recomendacoes
+    component "Interface do Usuário" as InterfaceUsuario
+}
+
+Dashboard --> Autenticacao : Utiliza
+Dashboard --> BancoDados : Consulta
+GestaoAulas --> Autenticacao : Utiliza
+GestaoAulas --> BancoDados : Consulta e Atualiza Progresso
+GestaoCursos --> Autenticacao : Utiliza
+GestaoCursos --> BancoDados : Consulta e Modifica Dados de Cursos
+InscricaoCursos --> Autenticacao : Utiliza
+InscricaoCursos --> BancoDados : Consulta e Atualiza Inscrições
+Dashboard --> Recomendacoes : Solicita Sugestões
+InterfaceUsuario --> Dashboard : Renderiza
+InterfaceUsuario --> GestaoAulas : Renderiza
+InterfaceUsuario --> GestaoCursos : Renderiza
+InterfaceUsuario --> InscricaoCursos : Renderiza
+
+@enduml

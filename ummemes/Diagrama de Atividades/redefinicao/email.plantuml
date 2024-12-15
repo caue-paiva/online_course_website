@@ -1,0 +1,35 @@
+@startuml
+
+|Usuário|
+start
+:Acessa a área de redefinição de senha;
+
+|Sistema|
+:Solicita o email do usuário;
+
+|Usuário|
+:Informa os dados;
+
+|Sistema|
+while (Email encontrado?) is (Não)
+    :Mesnsagem: "Email não cadastrado";
+    
+    :Solicita novo Email;
+
+    |Usuário|
+    :Fornece email;
+    
+endwhile (Sim)
+
+|Sistema|
+:Solicita nova senha na caixa de email;
+
+|Usuário|
+:Fornece nova senha;
+
+|Sistema|
+:Senha redefinida com sucesso;
+:Vai para a página de login;
+stop
+
+@enduml

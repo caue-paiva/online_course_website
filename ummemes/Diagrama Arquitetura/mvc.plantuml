@@ -1,0 +1,47 @@
+@startuml
+actor "Aluno" as Aluno
+actor "Professor" as Professor
+
+package "View" {
+  [Página Inicial]
+  [Dashboard]
+}
+
+package "Controller" {
+  [AutenticatorController]
+  [AlunoController]
+  [ProfessorController]
+}
+
+package "Model" {
+  [Serviço de Autenticação]
+  [Serviços de Aluno]
+  [Serviços de Professor]
+  [Serviços de Curso]
+}
+
+package "Banco de Dados" {
+  [Usuários]
+  [Cursos]
+}
+
+Aluno --> [Página Inicial] : "Fazer Login/Cadastro"
+Professor --> [Página Inicial] : "Fazer Login/Cadastro"
+Aluno --> [Dashboard] : "Acessar Dashboard"
+Professor --> [Dashboard] : "Acessar Dashboard"
+
+[Página Inicial] --> [AutenticatorController] : "Envia Credenciais"
+[AutenticatorController] --> [Serviço de Autenticação] : "Autentica"
+[Serviço de Autenticação] --> [Usuários] : "Consulta/Modifica"
+
+[Dashboard] --> [AlunoController] : "Solicita Dados do Aluno"
+[Dashboard] --> [ProfessorController] : "Solicita Dados do Professor"
+
+[AlunoController] --> [Serviços de Aluno] : "Chama Serviço"
+[ProfessorController] --> [Serviços de Professor] : "Chama Serviço"
+
+[Serviços de Aluno] --> [Serviços de Curso] : "Consulta Cursos"
+[Serviços de Professor] --> [Serviços de Curso] : "Modifica Cursos"
+
+[Serviços de Curso] --> [Cursos] : "Acessa/Modifica Dados"
+@enduml

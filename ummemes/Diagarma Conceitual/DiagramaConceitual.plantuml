@@ -1,0 +1,101 @@
+@startuml
+
+class Curso {
+    + ID: int
+    + Nome: String
+    + Descricao: String
+    + ListaModulos: List
+}
+
+class Modulo {
+    + ID: int
+    + ListaVideoAulas: List
+    + ListaTextos: List
+}
+
+class Texto {
+    + ID: int
+    + Conteudo: String
+}
+
+class VideoAula {
+    + ID: int
+    + LinkVideo: String
+}
+
+class ServicoAutenticacao {
+    + VerificaEmail(Email): bool
+    + VerificaConta(VerificaEmail(Email), senha): Usuario
+}
+
+class ServicoCurso {
+    + InscreverCurso(ID_Usario, ID_Curso)
+    + CancelarInscricao(ID_Usuario, ID_Curso)
+    + GetCurso(ID_Curso): Curso
+    + GetCursos(ID_Usuario): ListaCursos
+
+    + Criar_Curso(ID_Usuario): ID_Curso
+    + Deletar_Curso(ID_Usario, ID_Curso): bool
+
+    + AdicionarModulo(ID_Usuario, ID_Curso): ID_Modulo
+    + DeletarModulo(ID_Usuario, ID_Curso, ID_Modulo): bool
+    + AdicionarVideoAula(ID_Usuario, ID_Curso, ID_Modulo, VideoAula): bool
+    + RemoverVideoAula(ID_Usuario, ID_Curso, ID_Modulo, ID_VideoAula): bool
+    + AdicionarTexto(ID_Usuario, ID_Curso, ID_Modulo, Texto): bool
+    + RemoverTexto(ID_Usuario, ID_Curso, ID_Modulo, ID_Texto): bool
+}
+
+class ServicoUsuario {
+    - __ServicoCurso__: ServicoCurso
+    + InscreverCurso(Usuario, ID_Curso)
+    + CancelarInscricao(Usuario, ID_Curso)
+    + GetCurso(ID_Curso): Curso
+    + GetCursos(ID_Usuario): ListaCursos
+}
+
+class ServicoProfessor {
+    + Criar_Curso(ID_Usuario): ID_Curso
+    + Deletar_Curso(ID_Usario, ID_Curso): bool
+
+    + AdicionarModulo(ID_Usuario, ID_Curso): ID_Modulo
+    + DeletarModulo(ID_Usuario, ID_Curso, ID_Modulo): bool
+
+    + AlterarVideoAula(ID_Usuario, ID_Curso, ID_Modulo, VideoAula)
+    
+    + AlterarTexto(ID_Usuario, ID_Curso, ID_Modulo, Texto)
+}
+
+class ServicoAluno {
+
+}
+class Usuario {
+    + id : int
+    + name : String
+    + email: String
+    + ativo : boolean
+    + ListaCursosInscritos: list
+}
+
+class Aluno {
+}
+
+class Professor {
+    + instituiçãoNome: String
+    + instituiçãoID: int
+    + ListaCursosMinistrados: list
+}
+
+Usuario <|-- Aluno
+Usuario <|-- Professor
+
+
+ServicoUsuario <|-- ServicoAluno
+ServicoUsuario <|-- ServicoProfessor
+
+ServicoUsuario  *-- ServicoCurso
+
+Curso *-- Modulo
+Modulo *-- Texto
+Modulo *-- VideoAula
+
+@endumlW

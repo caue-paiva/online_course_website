@@ -1,0 +1,36 @@
+@startuml
+
+|Usuário|
+start
+:Acessa a área de login;
+
+|Sistema|
+:Solicita dados do usuário (email, senha);
+
+|Usuário|
+:Informa os dados;
+
+|Sistema|
+while (Dados inconsistentes?) is (Sim)
+    :Mensagem: "Email ou Senha inválidos";
+
+    if (Email/Senha inválido?) then (Sim)
+        |Usuário|
+        :Insere os dados novamente Ou Redefine senha;
+    else (Não)
+    endif
+
+    |Sistema|
+    if (Redefine senha?) then (Sim)
+        :Vai para a página de redefinição de senha;
+        stop
+    else (Não)
+    endif
+    
+endwhile (Não)
+
+|Sistema|
+:Acesso ao sistema;
+stop
+
+@enduml
