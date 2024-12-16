@@ -46,10 +46,6 @@ def login(request):
    return render(request, "login.html")
 
 def deslogar(request):
-   #verificar se o usuário não está logado
-   if (request.session["user_id"]) == None:
-      raise RuntimeError("Usuario Não autenticado")
-   
    #apagar todas as informações sobre o usuário nessa sessão
    request.session["user_id"] = None
 

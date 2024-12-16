@@ -1,7 +1,5 @@
-# O que tem pra fazer
+# Instruções para rodar o site
 
-2) Mudar o nome de algumas variáveis do inglês pro português
-
-3) Documentação melhor
-
-4) Escrever no texto texto
+* Tenha a biblioteca django instalada
+* Vá para o diretório site_cursos
+    * execute o seguinte comando: python3 manage.py runserver
